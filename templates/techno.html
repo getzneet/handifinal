@@ -13,9 +13,23 @@
             <h1>{{ att.nom }}</h1>
             <hr>
 
+            <h3>Vidéo<h3>
+            <iframe width="800" height="400"
+            src="{{ att.video }}">
+            </iframe>
+
             <h3>Description</h3>
             <p>
                 {{ att.description }}
+            </p>
+
+            <h3>CIF</h3>
+            <p>
+                {{ att.cif}}
+            </p>
+            <h3>Pathologie</h3>
+            <p>
+                {{ att.patho }}
             </p>
 
             <h3>Type de technologie</h3>
