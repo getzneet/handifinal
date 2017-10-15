@@ -25,7 +25,5 @@ urlpatterns = [
     url(r'^categories/$', views.categories, name='categories'),
     url(r'^categories/assistance$', views.categorya, name='assistance'),
     url(r'^categories/fonctions$', views.categoryf, name='fonctions'),
-    url(r'^techno/1/$', views.technology, name='technology'),
-    url(r'^techno/2/$', views.technology_, name='technology2'),
-
+    url(r'^techno/([0-9]+)/$', views.technology, name='technology'),
 ]

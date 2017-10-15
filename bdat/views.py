@@ -2,21 +2,21 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.shortcuts import render_to_response, render
 from .models import Institution, Technology
+import logging as log
 
 
 # Create your views here.
 
 def home(request):
     queryset = Technology.objects.all()
-    list = [entry for entry in queryset]
-    return render(request, "home.html", {'attributs': list})
+    return render(request, "home.html", {'attributs': list(queryset)})
 
 
 def category(request):
     queryset = Technology.objects.all()
 
     return render(request, "category.html",
-                  {"attributs": [entry.cat_assistance for entry in queryset], "titre": "Assistance",
+                  {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance",
                    "nb_attributs": [entry for entry in queryset].__len__()})
 
 
@@ -32,12 +32,11 @@ def contact(request):
     return render_to_response("contact.html")
 
 
-
 def categorya(request):
     queryset = Technology.objects.all()
 
     return render(request, "category.html",
-                  {"attributs": [entry.cat_assistance for entry in queryset], "titre": "Assistance",
+                  {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance",
                    "nb_attributs": [entry for entry in queryset].__len__()})
 
 
@@ -45,7 +44,7 @@ def categoryf(request):
     queryset = Technology.objects.all()
 
     return render(request, "category.html",
-                  {"attributs": [entry.cat_fonctions for entry in queryset], "titre": "Fonctions",
+                  {"attributs": [entry.fonction for entry in queryset], "titre": "Fonctions",
                    "nb_attributs": [entry for entry in queryset].__len__()})
 
 
@@ -53,19 +52,20 @@ def categoryt(request):
     queryset = Technology.objects.all()
 
     return render(request, "category.html",
-                  {"attributs": [entry.cat_techno for entry in queryset], "titre": "Technologies",
+                  {"attributs": [entry.nom for entry in queryset], "titre": "Technologies",
                    "nb_attributs": [entry for entry in queryset].__len__()})
 
 
-def technology(request):
+def technology(request, idx):
     queryset = Technology.objects.all()
+    techno = [techno for techno in queryset if techno.idx == int(idx)][0]
 
     return render(request, "techno.html",
-                  {"att": queryset[0]})
+                  {"att": techno})
 
 
 def technology_(request):
     queryset = Technology.objects.all()
 
     return render(request, "techno.html",
-                  {"att": queryset[1]})
+                  {"att": queryset[0]})
