@@ -62,7 +62,10 @@ def technology(request, idx):
     queryset = Technology.objects.all()
 
     techno = [techno for techno in queryset if techno.idx == int(idx)][0]
-    techno.video = get_technology_video(techno.nom)
+
+    if not hasattr(techno, "video"):
+        log.debug("No video found for techno '{}', running youtube lookup...".format(techno.nom))
+        techno.video = get_technology_video(techno.nom)
 
     return render(request, "techno.html",
                   {"att": techno})
@@ -77,8 +80,6 @@ def technology_(request):
 def get_technology_video(name):
     """
     shitty method to get a video describing the techno from youtube
-    (not accurate and resource eating because called at each pageload,
-    maybe a function to call at program startup).
     """
 
     query_string = urllib.parse.urlencode({"search_query": name})
