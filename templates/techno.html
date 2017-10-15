@@ -9,46 +9,41 @@
 
         </ol>
 
-        <div class="row">
-            <h1>{{ att.nom }}</h1>
-            <hr>
+    <div class="row">
+    <h1>{{ att.nom }}</h1>
+    <hr>
+    </br> 
+    </br> 
+    <h3> Tableau d'informations </h3>
+    <table class="row" cellspacing="40">
+      <tr>
+        <th class="tg-yw4l">Description</th>
+        <th class="tg-yw4l">Type d'âge</th>
+        <th class="tg-yw4l">Type de technologie</th>
+        <th class="tg-yw4l">Pathologie</th>
+        <th class="tg-yw4l">CIF</th>
+        <th class="tg-yw4l">Entreprise/Laboratoire</th>
+      </tr>
+      <tr>
+        <td class="tg-yw4l">{{ att.description }}<br></td>
+                
+        <td class="tg-yw4l">{{ att.age}}</td>
+        <td class="tg-yw4l">{{ att.type_techno}}</td>
+        <td class="tg-yw4l">{{ att.patho}}</td>
+        <td class="tg-yw4l">{{ att.cif}}</td>
+        <td class="tg-yw4l">{{ att.entreprise}}</td>
+      </tr>
+    </table>
+    </br> 
+    <hr> 
 
-            <h3>Vidéo<h3>
-            <iframe width="800" height="500"
-            src="{{ att.video }}">
-            </iframe>
+    <h3>Vidéo<h3>
+    <iframe width="800" height="500"
+    src="{{ att.video }}">
+    </iframe>
 
-            <h3>Description</h3>
-            <p>
-                {{ att.description }}
-            </p>
 
-            <h3>CIF</h3>
-            <p>
-                {{ att.cif}}
-            </p>
-            <h3>Pathologie</h3>
-
-            <p>
-                {{ att.patho }}
-            </p>
-
-            <h3>Type de technologie</h3>
-            <p>
-                {{ att.type_techno}}
-            </p>
-
-            <h3>Entreprise / Laboratoire</h3>
-            <p>
-                {{ att.entreprise}}
-            </p>
-
-            <h3>Type d'âge</h3>
-            <p>
-                {{ att.age}}
-            </p>
-
-        </div>
+    </div>
 
         <hr>
 
