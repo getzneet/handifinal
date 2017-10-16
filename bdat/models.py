@@ -28,6 +28,7 @@ class Technology(models.Model):
     cif = models.CharField(max_length=100, null=True)
     fonction = models.CharField(max_length=100, null=True)
     idx = models.IntegerField(max_length=100, null=True)
+    video = models.TextField()
 
     def __str__(self):
         return self.nom

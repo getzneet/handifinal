@@ -26,4 +26,8 @@ urlpatterns = [
     url(r'^categories/assistance$', views.categorya, name='assistance'),
     url(r'^categories/fonctions$', views.categoryf, name='fonctions'),
     url(r'^techno/([0-9]+)/$', views.technology, name='technology'),
+    url(r'^search/(?:(?P<words>\w{0, 50})/)?$', views.search, name='search'),
+    # url(r'^search/(?:(?P<words>\w{0,50})/)$', views.search, name='search'),
+# r'^post/(?:(?P<slug>\w+)/)?save/'
+
 ]
