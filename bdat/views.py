@@ -33,7 +33,7 @@ def get_all_technologies():
 def home(request):
     queryset = get_all_technologies()
 
-    return render(request, "home.html", {'attributs': queryset})
+    return render(request, "home.html", {'attributs': queryset, 'words': 0, 'n_results': 0})
 
 
 def category(request):
@@ -105,7 +105,7 @@ def search(request, words):
 
             return render(request, 
                     "home.html",
-                   {'attributs': search_results})
+                    {'attributs': search_results, 'words': words, 'n_results': len(search_results)})
 
 
 def search_in_objects(*words):

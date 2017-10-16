@@ -1,6 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Assist 4000{% endblock %}
 {% block content %}
+    
+
+    <!--Temporary script in order to not scrolltop when searching techno-->
+    <script>
+        
+        document.getElementsByName("q").addEventListener("change", refresh);
+
+        function refresh () {
+        alert("test");
+        $.cookie('last-scroll-top', $(window).scrollTop());
+
+                
+           setTimeout(function(){
+            var lastScrollTop = $.cookie('last-scroll-top');
+            if (lastScrollTop) {
+            $(window).scrollTop(lastScrollTop);
+            $.removeCookie('last-scroll-top');
+        }
+            }, 500); 
+        
+        }
+    </script>
+
     <div class="container" style="padding-top: 50px">
 
         <div class="jumbotron">
@@ -11,52 +34,28 @@
             <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
-                <form id="searchform" class="search-form" action="{% url 'search' %}" method="get" accept-charset="utf-8">
+                <form id="searchform" name="searchform" class="search-form" action="{% url 'search' %}" method="get" accept-charset="utf-8">
                     <!--<button class="searchbutton" type="submit">-->
                     <!--</button>-->
                     <input class="form-control" name="q" type="text"
-                    placeholder="Rechercher une technologie">
-                    <!--<div id="right">-->
-                      <!--<span class="fa fa-search"></span>-->
-                    <!--</div>-->
+                    placeholder="Rechercher une technologie...">
+                    </br>
+
+                    {% if words != 0 %}
+                    <b> {{ n_results }} </b> résultats pour les mots :  <b> {{words}} </b>.
+                    {% endif %}
+
+
                     </form>
                         </div>
                     </div>
                 </div>
                 </div>
-<!--<script>-->
-<!--$(document).ready(function() {-->
-    <!--$("input.form-control").click(function() {-->
-        <!--/*var com_body = $('#my-text-input-id').val();*/-->
-        <!--alert("test");-->
-        <!--});-->
-    <!--});-->
-<!--});-->
-<!--</script>-->
-<!--<script>-->
-<!--/* event listener */-->
-<!--document.getElementsByName("searchinput")[0].addEventListener('change', refresh);-->
-
-<!--/* function */-->
-<!--function refresh(){-->
-
-
-<!--}-->
-<!--</script>-->
  
         </br>
         <div class="row" id="results">
             {% include "list.html" %}
         </div>
+        </div><!-- /.container -->
 
-
-        <!-- Footer -->
-       <!-- <footer>-->
-            <!--<div class="row">-->
-                <!--<div class="col-lg-12">-->
-                    <!--<p>Copyright &copy; Assistive Technologies 2017</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</footer>-->
-    </div><!-- /.container -->
 {% endblock %}
