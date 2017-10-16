@@ -2,7 +2,6 @@ import logging as log
 import urllib.request
 import urllib.parse
 import re
-from render_block import render_block_to_string
 
 from django.http import HttpResponse
 from django.template.loader import get_template
