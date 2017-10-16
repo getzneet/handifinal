@@ -85,11 +85,10 @@ def technology(request, idx):
     techno = Technology.objects.get(idx=int(idx))
     
     if techno.video is None:
+
         log.debug("No video found for techno '{}', running youtube lookup...".format(techno.nom))
         techno.video = get_technology_video(techno.nom)
-        
-        if techno.video is not None:
-            techno.save()
+        techno.save(update_fields=['video'])
 
     return render(request, 
                   "techno.html",
