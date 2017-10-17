@@ -9,7 +9,7 @@ from django.shortcuts import render_to_response, render
 from .models import Institution, Technology
 
 
-# def get_all_technologies():
+# defsUtils.get_all_technologies():
     
     # data = []
 
@@ -26,23 +26,6 @@ from .models import Institution, Technology
           # })
 
     # return data
-def get_all_technologies():
-    return list(Technology.objects.all())
-
-
-def home(request):
-    queryset = get_all_technologies()
-
-    return render(request, "home.html", {'attributs': queryset, 'words': 0, 'n_results': 0})
-
-
-def category(request):
-    queryset = get_all_technologies()
-
-    return render(request, "category.html",
-                  {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance",
-                   "nb_attributs": [entry for entry in queryset].__len__()})
-
 
 def categories(request):
     return render_to_response("categories.html")
@@ -57,7 +40,7 @@ def contact(request):
 
 
 def categorya(request):
-    queryset = get_all_technologies()
+    queryset = Utils.get_all_technologies()
 
     return render(request, "category.html",
                   {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance",
@@ -65,7 +48,7 @@ def categorya(request):
 
 
 def categoryf(request):
-    queryset = get_all_technologies()
+    queryset = Utils.get_all_technologies()
 
     return render(request, "category.html",
                   {"attributs": [entry.fonction for entry in queryset], "titre": "Fonctions",
@@ -73,10 +56,23 @@ def categoryf(request):
 
 
 def categoryt(request):
-    queryset = get_all_technologies()
+    queryset = Utils.get_all_technologies()
 
     return render(request, "category.html",
                   {"attributs": [entry.nom for entry in queryset], "titre": "Technologies",
+                   "nb_attributs": len(queryset)})
+
+def home(request):
+    queryset = Utils.get_all_technologies()
+
+    return render(request, "home.html", {'attributs': queryset, 'words': 0, 'n_results': 0})
+
+
+def category(request):
+    queryset = Utils.get_all_technologies()
+
+    return render(request, "category.html",
+                  {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance",
                    "nb_attributs": len(queryset)})
 
 
@@ -87,7 +83,7 @@ def technology(request, idx):
     if techno.video is None:
 
         log.debug("No video found for techno '{}', running youtube lookup...".format(techno.nom))
-        techno.video = get_technology_video(techno.nom)
+        techno.video = Utils.get_technology_video(techno.nom)
         techno.save(update_fields=['video'])
 
     return render(request, 
@@ -101,34 +97,42 @@ def search(request, words):
         if "q" in request.GET.keys():
             words = request.GET["q"]
 
-            search_results = search_in_objects(words)
+            search_results = Utils.search_in_objects(words)
 
             return render(request, 
                     "home.html",
                     {'attributs': search_results, 'words': words, 'n_results': len(search_results)})
 
 
-def search_in_objects(*words):
-    
-    technos = get_all_technologies()
-    match = []
+class Utils:
 
-    for w in words:
-        for techno in technos:
-            att = [i.lower() for i in techno.__dict__.values() if type(i) == str]
-            for a in att:
-                if w.lower() in a:
-                    if not techno in match:
-                        match.append(techno)
+    @staticmethod 
+    def get_all_technologies():
+        return list(Technology.objects.all())
 
-    return match
+    @staticmethod 
+    def search_in_objects(*words):
+        
+        technos = Utils.get_all_technologies()
+        match = []
 
-def get_technology_video(name):
-    """
-    shitty function to get a video describing the techno from youtube
-    """
+        for w in words:
+            for techno in technos:
+                att = [i.lower() for i in techno.__dict__.values() if type(i) == str]
+                for a in att:
+                    if w.lower() in a:
+                        if not techno in match:
+                            match.append(techno)
 
-    query_string = urllib.parse.urlencode({"search_query": name})
-    html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
-    search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
-    return "http://www.youtube.com/embed/" + search_results[0]
+        return match
+
+    @staticmethod
+    def get_technology_video(name):
+        """
+        shitty function to get a video describing the techno from youtube
+        """
+
+        query_string = urllib.parse.urlencode({"search_query": name})
+        html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
+        search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
+        return "http://www.youtube.com/embed/" + search_results[0]
