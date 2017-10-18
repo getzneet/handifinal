@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import ipgetter
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '1ksab6)n*wg7^y_ttmbm)+pj_s%u0dhil41@!)27#84_j!&-#p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '84.100.185.155', '192.168.1.92', '84.100.185.122']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '84.100.185.155', '192.168.1.92', '84.100.185.122', ipgetter.myip()]
 
 # Application definition
 
