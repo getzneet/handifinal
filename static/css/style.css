@@ -5,6 +5,42 @@
     Author URL: https://bootstrapmade.com
 */
 
+.search-test .fa-search { 
+  position: absolute;
+  top: 9px;
+  right: 29px;
+  font-size: 25px !important;
+}
+
+.list {
+    opacity:0;
+    -moz-animation: anim 1s linear forwards 1s;
+    -webkit-animation: anim 1s linear forwards 1s;
+    -o-animation: anim 1s linear forwards 1s;
+    -ms-animation: anim 1s linear forwards 1s;
+    animation: anim 1s linear forwards 1s;
+}
+@-moz-keyframes anim {
+   0%  {opacity:0;}
+   100% {opacity:1;}
+}
+@-webkit-keyframes anim {
+   0%  {opacity:0;}
+   100% {opacity:1;}
+}
+@-o-keyframes anim {
+   0%  {opacity:0;}
+   100% {opacity:1;}
+}
+@-ms-keyframes anim {
+   0%  {opacity:0;}
+   100% {opacity:1;}
+}
+@keyframes anim {
+   0%  {opacity:0;}
+   100% {opacity:1;}
+}
+
 .search-form .form-group {
   float: right !important;
   transition: all 0.35s, border-radius 0s;

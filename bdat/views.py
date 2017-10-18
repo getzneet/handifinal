@@ -1,31 +1,15 @@
 import logging as log
 import urllib.request
 import urllib.parse
+import json
 import re
 
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.shortcuts import render_to_response, render
 from .models import Institution, Technology
+from django.http import JsonResponse
 
-
-# defsUtils.get_all_technologies():
-    
-    # data = []
-
-    # for tech in Technology.objects.all():
-
-        # data.append({
-          # "name": tech.name, 
-          # "description": tech.description,
-          # "entreprise":tech.entreprise,
-          # "type_techno": tech.type_techno,
-          # "video": tech.video,
-          # "article": tech.article,
-          # "age": tech.age
-          # })
-
-    # return data
 
 def categories(request):
     return render_to_response("categories.html")
@@ -86,23 +70,19 @@ def technology(request, idx):
         techno.video = Utils.get_technology_video(techno.nom)
         techno.save(update_fields=['video'])
 
-    return render(request, 
-                  "techno.html",
-                  {"att": techno})
+    return render(request, "techno.html", {"att": techno})
 
 
 def search(request, words):
     
-    if hasattr(request, 'GET'):
-        if "q" in request.GET.keys():
-            words = request.GET["q"]
+        words = request.GET["q"]
+        search_results = Utils.search_in_objects(words)
 
-            search_results = Utils.search_in_objects(words)
-
-            return render(request, 
-                    "home.html",
-                    {'attributs': search_results, 'words': words, 'n_results': len(search_results)})
-
+        return render(request,
+            "list.html", 
+            {'attributs': search_results, 'n_results': len(search_results), 'words': words})         
+                
+    # ---------------------------- Utils --------------------------------------------------------------- # 
 
 class Utils:
 
@@ -125,6 +105,27 @@ class Utils:
                             match.append(techno)
 
         return match
+
+    @staticmethod
+    def get_technologies_att(technos):
+    
+        data = []
+
+        for tech in technos:
+
+            data.append({
+              "nom": tech.nom,
+              "description": tech.description,
+              "entreprise":tech.entreprise,
+              "type_techno": tech.type_techno,
+              "video": tech.video,
+              "article": tech.article,
+              "age": tech.age,
+              "patho": tech.patho,
+              "cif": tech.cif,
+              })
+
+        return data
 
     @staticmethod
     def get_technology_video(name):
