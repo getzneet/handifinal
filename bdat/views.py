@@ -75,12 +75,12 @@ def technology(request, idx):
 
 def search(request, words):
     
-        words = request.GET["q"]
+        words = request.GET["q"].split(" ")
         search_results = Utils.search_in_objects(words)
 
         return render(request,
             "list.html", 
-            {'attributs': search_results, 'n_results': len(search_results), 'words': words})         
+            {'attributs': search_results, 'n_results': len(search_results), 'words': " ".join(words)})         
                 
     # ---------------------------- Utils --------------------------------------------------------------- # 
 
@@ -91,7 +91,7 @@ class Utils:
         return list(Technology.objects.all())
 
     @staticmethod 
-    def search_in_objects(*words):
+    def search_in_objects(words):
         
         technos = Utils.get_all_technologies()
         match = []

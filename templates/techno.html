@@ -36,11 +36,13 @@
     </table>
     </br> 
     <hr> 
-
+    
+    {% if att.video %}
     <h3>Vidéo<h3>
     <iframe width="800" height="500"
     src="{{ att.video }}">
     </iframe>
+    {% endif %}
 
 
     </div>

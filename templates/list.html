@@ -1,4 +1,6 @@
 {% block block_list%}
+
+
 <div class="jumbotron">
             <center><h1>Liste des technologies</h1></center>
             </br>
@@ -10,13 +12,20 @@
 
                     <div class="search-test">
                     <span class="fa fa-search"></span>
+
+                    {% if words != 0 %}
+                    <input class="form-control" type="text" name="input"
+                    value='{{words}}'>
+                    {% elif words == 0 %}
                     <input class="form-control" type="text" name="input"
                     placeholder="Rechercher une technologie...">
+                    {% endif %}
+
                     </div>
                     </br>
                     
                     {% if words != 0 %}
-                    <b> {{ n_results }} </b> résultats pour :  <b> {{words}} </b>.
+                    <b> {{ n_results }} </b> résultat(s) pour :  <b> {{words}} </b>.
                     {% endif %}
 
                     <!--</form>-->
@@ -27,7 +36,7 @@
  
         </br>
 
-        <div class="list">
+        <div class="animate-bottom" name="list">
         {% for att in attributs %}
                         <div class="col-md-4">
                             <div class="thumbnail">
@@ -56,6 +65,7 @@ $(document).ready(function(){
                 url: 'search/?q=' + query ,
                 success: function(data){
                     $('#results').html(data);
+
                 }
             });
 
