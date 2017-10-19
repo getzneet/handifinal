@@ -6,29 +6,4 @@
             {% include "list.html" %}
     </div>
 
-<!--Temporary script in order to search techno-->
-<script>
-$(document).ready(function(){
-    $("input").keyup(function(e){
-
-    	var key = e.which || e.keyCode;
-    	
-        if (key == 13){
-
-            var query = document.getElementsByName("input")[0].value;
-
-            $.ajax({
-                type: "GET",
-                url: 'search/?q=' + query ,
-                success: function(data){
-                    $('#results').html(data);
-               }
-            });
-
-        }
-
-    });
-});
-</script>
-
 {% endblock %}

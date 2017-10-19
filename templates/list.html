@@ -49,16 +49,15 @@
         {% endfor %}
         </div>
 
-<!--Temporary script in order to search techno-->
 <script>
 $(document).ready(function(){
     $("input").keyup(function(e){
 
-    	var key = e.which || e.keyCode;
-    	
+        var key = e.which || e.keyCode;
+        
         if (key == 13){
 
-            var query = document.getElementsByName("input")[0].value;
+            var query = this.value;
 
             $.ajax({
                 type: "GET",
