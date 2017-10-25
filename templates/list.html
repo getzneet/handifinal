@@ -1,6 +1,6 @@
 {% block block_list%}
 
-
+<!--Search engine div-->
 <div class="jumbotron">
             <center><h1>Liste des technologies</h1></center>
             </br>
@@ -14,28 +14,32 @@
                     <span class="fa fa-search"></span>
 
                     {% if words != 0 %}
-                    <input class="form-control" type="text" name="input"
+
+                    <input class="form-control" type="text" name="searchinput"
                     value='{{words}}'>
-                    {% elif words == 0 %}
-                    <input class="form-control" type="text" name="input"
-                    placeholder="Rechercher une technologie...">
-                    {% endif %}
 
                     </div>
                     </br>
-                    
-                    {% if words != 0 %}
-                    <b> {{ n_results }} </b> résultat(s) pour :  <b> {{words}} </b>.
+
+                    <b> {{ n_results }} </b> résultat(s) pour :  <b> {{ words }} </b>.
+
+                    {% elif words == 0 %}
+
+                    <input class="form-control" type="text" name="searchinput"
+                    placeholder="Rechercher une technologie...">
+                    </div>
+                    </br>
+
                     {% endif %}
 
-                    <!--</form>-->
-                        </div>
+                    </div>
                     </div>
                 </div>
                 </div>
  
         </br>
 
+         <!--List of technologies-->
         <div class="animate-bottom" name="list">
         {% for att in attributs %}
                         <div class="col-md-4">
@@ -49,21 +53,26 @@
         {% endfor %}
         </div>
 
+ <!--ajax script used in order to refresh technologies when user launch a research-->
 <script>
 $(document).ready(function(){
     $("input").keyup(function(e){
 
+        //get pressed key
         var key = e.which || e.keyCode;
         
+        //if k == enter
         if (key == 13){
-
+            
+            //get input value
             var query = this.value;
 
+            //send it to django 
             $.ajax({
                 type: "GET",
                 url: 'search/?q=' + query ,
                 success: function(data){
-                    $('#results').html(data);
+                    $('#search').html(data);
 
                 }
             });
