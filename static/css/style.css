@@ -195,7 +195,7 @@ banner
     border: 0px;
 }
 .navbar {
-    border-radius: 0px;
+    border-radius: 9px;
 }
 .navbar-default {
     background-color: #fff;
@@ -209,20 +209,28 @@ banner
 .navbar {
     border-radius: 0px;
 }
-
-.navbar-brand
-{
+.navbar-brand {
 	font-family: 'Chewy', cursive;
 	font-size: 32px;
 }
-
 .navbar-brand img {
     padding-top: 2px;
     width: 120px !important;
 }
-
 .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
     color: #EA6045;
+}
+
+#logo{
+    position:absolute;
+    /*top:3px; */
+    left:15px;
+    /*background-color: #ffffff;*/
+    /*padding: 4px;*/
+    width:13%;
+    /*height:8%;*/
+
+    /*overflow:hidden;*/
 }
 
 .top-nav-collapse {
@@ -264,15 +272,16 @@ banner
 {
     background-color: rgba(12, 184, 182) !important;
 }
+
 #banner{
 	background: url('../img/bg-banner.jpg') no-repeat fixed;
 	background-size: cover;
-	min-height: 650px;
+	min-height: 500px;
 	position: relative;
 }
 .bg-color{
 	background-color: RGBA(13, 70, 83, 0.78);
-	min-height: 650px;
+	min-height: 500px;
 }
 .banner-info{
 	padding-top: 190px;

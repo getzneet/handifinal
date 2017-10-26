@@ -22,6 +22,8 @@ def about(request):
 def contact(request):
     return render_to_response("contact.html")
 
+def subform(request):
+    return render_to_response("subform.html")
 
 def categorya(request):
     queryset = Utils.get_all_technologies()

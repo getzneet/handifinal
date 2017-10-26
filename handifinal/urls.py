@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^about$', views.about, name='about'),
     url(r'^contact$', views.contact, name='contact'),
     url(r'^categories/$', views.categories, name='categories'),
+    url(r'^subform/$', views.subform, name='subform'),
     url(r'^categories/assistance$', views.categorya, name='assistance'),
     url(r'^categories/fonctions$', views.categoryf, name='fonctions'),
     url(r'^techno/([0-9]+)/$', views.technology, name='technology'),
