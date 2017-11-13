@@ -2,8 +2,8 @@
 {% block title %}Assistances numériques{% endblock %}
 {% block content %}
 
+{% include 'widgets/modal_form_validation.html' %}
 
-<!-- Formulaire de soumission WIP (validé en ajax) -->
 <div class="container">
 <div class="jumbotron">
 <div class="row">
@@ -11,21 +11,34 @@
 <div class="col-md-9 col-md-offset-1">
 
     <center><h1>Formulaire de soumission d'une technologie</h1></center>
+
     <hr>
-    Votre mél <input type="text" class="form-control" name="email"><br><br>
-    Nom de la technologie <input type="text" class="form-control" name="nom"><br>
-    Description
-    <textarea rows="10" cols="100" class="form-control" name="description" required
-                  data-validation-required-message="Please enter your message" maxlength="999"
-                  style="resize:none"></textarea>
 
-    <br>
+    <hr>
+        <form method="post" id="subform" novalidate>
+        
+        <!--Show pop if form is valid-->
+        {% if success == 1 %}
+        <script>
+        $("#myModal").modal()
+        </script>
+        {% endif %}
 
-    <p><a class="btn btn-primary" role="button">Soumettre</a>
+      {% csrf_token %}
+      {% include 'form.html' with form=form %}
+
+      <button id="sub_btn" type="submit" class="btn btn-primary">Soumettre</button>
+
 </div>
 </div>
 </div>
 </div>
+
+<script>
+    document.getElementById("sub_btn").addEventListener("click", function(){
+        document.getElementById("subform").submit();
+    });
+</script>
 <!-- formulaire -->
 
  {% endblock %}

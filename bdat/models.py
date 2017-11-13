@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Institution(models.Model):
+
     nom = models.CharField(max_length=100, null=True)
     source = models.TextField(null=True)
     article = models.TextField(null=True)
@@ -13,22 +14,53 @@ class Institution(models.Model):
     def __str__(self):
         return self.nom
 
+
 class Technology(models.Model):
-    nom = models.CharField(max_length=100, null=True)
-    description = models.TextField(null=True)
-    prix = models.FloatField(null=True)
-    age = models.CharField(max_length=100, null=True)
-    type_techno = models.CharField(max_length=100, null=True)
-    activite = models.CharField(max_length=100, null=True)
-    commentaires = models.CharField(max_length=100, null=True)
-    source = models.CharField(max_length=100, null=True)
-    article = models.TextField(null=True)
-    entreprise = models.CharField(max_length=100, null=True)
-    patho = models.CharField(max_length=100, null=True)
-    cif = models.CharField(max_length=100, null=True)
-    fonction = models.CharField(max_length=100, null=True)
-    idx = models.IntegerField(max_length=100, null=True)
-    video = models.TextField()
+
+    # technology's name
+    nom = models.CharField(max_length=100, null=True, blank=True)
+
+    # description
+    description = models.TextField(null=True, blank=True)
+
+    # price
+    prix = models.FloatField(null=True, blank=True)
+
+    # age slice
+    age = models.CharField(max_length=100, null=True, blank=True)
+
+    # type
+    type_techno = models.CharField(max_length=100, null=True, blank=True)
+
+    # type of activity
+    activite = models.CharField(max_length=100, null=True, blank=True)
+
+    # comments
+    commentaires = models.CharField(max_length=100, null=True, blank=True)
+
+    # source
+    source = models.CharField(max_length=100, null=True, blank=True)
+    article = models.TextField(null=True, blank=True)
+
+    # company developping the technology
+    entreprise = models.CharField(max_length=100, null=True, blank=True)
+
+    # what condition/pathology/illness
+    patho = models.CharField(max_length=100, null=True, blank=True)
+
+    # cif classification
+    cif = models.CharField(max_length=100, null=True, blank=True)
+
+    # fonction?
+    fonction = models.CharField(max_length=100, null=True, blank=True)
+
+    # video showing the techno
+    video = models.TextField(blank=True)
+
+    # is the techno visible on the website?
+    # has to be set to 1 after a form submission
+    # in order to see the techno on the website
+    show = models.IntegerField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.nom

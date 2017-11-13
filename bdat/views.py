@@ -1,29 +1,112 @@
 import logging as log
 import urllib.request
 import urllib.parse
-import json
 import re
 
-from django.http import HttpResponse
-from django.template.loader import get_template
 from django.shortcuts import render_to_response, render
-from .models import Institution, Technology
+from .models import Technology
 from django.http import JsonResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
+
+from .forms import SubmissionForm
+
+
+def technology(request, id):
+
+    """
+    render
+    a technology
+    """
+
+    techno = Technology.objects.get(id=int(id))
+
+    if techno.video is None:
+
+        log.debug("No video found for techno '{}', running youtube lookup...".format(techno.nom))
+        techno.video = Utils.get_technology_video(techno.nom)
+        techno.save(update_fields=['video'])
+
+    return render(request, "techno.html", {"att": techno})
+
+
+def search(request, words):
+
+    """
+    search
+    """
+
+    words = request.GET["q"].split(" ")
+    search_results = Utils.search_in_objects(words)
+
+    return render(
+        request,
+        "list.html",
+        {'attributs': search_results, 'n_results': len(search_results), 'words': " ".join(words)}
+    )
+
+
+def home(request):
+
+    """
+    home page
+
+    """
+
+    queryset = Technology.objects.filter(show=1)
+
+    return render(request, "home.html", {'attributs': queryset, 'words': 0, 'n_results': 0})
 
 
 def categories(request):
+
+    """
+    categories page
+    """
+
     return render_to_response("categories.html")
 
 
 def about(request):
+
+    """
+    about page
+    """
+
     return render_to_response("about.html")
 
 
 def contact(request):
+
+    """
+    contact page
+    """
+
     return render_to_response("contact.html")
 
+
 def subform(request):
-    return render_to_response("subform.html")
+
+    """
+    renders the form page
+    """
+
+    if request.method == "POST":
+
+        form = SubmissionForm(request.POST)
+
+        if form.is_valid():
+            return render(request, "subform.html", {'form': form, 'success': 1})
+
+        else:
+            return render(request, "subform.html", {'form': form, 'success': 0})
+
+    else:
+
+        form = SubmissionForm()
+
+    return render(request, "subform.html", {'form': form, 'success': 0})
+
 
 def categorya(request):
     queryset = Utils.get_all_technologies()
@@ -48,91 +131,56 @@ def categoryt(request):
                   {"attributs": [entry.nom for entry in queryset], "titre": "Technologies",
                    "nb_attributs": len(queryset)})
 
-def home(request):
-    queryset = Utils.get_all_technologies()
-
-    return render(request, "home.html", {'attributs': queryset, 'words': 0, 'n_results': 0})
-
 
 def category(request):
     queryset = Utils.get_all_technologies()
 
-    return render(request, "category.html",
-                  {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance",
-                   "nb_attributs": len(queryset)})
+    return render(request,
+        "category.html",
+        {"attributs": [entry.type_techno for entry in queryset], "titre": "Assistance", "nb_attributs": len(queryset)}
+    )
 
-
-def technology(request, idx):
-
-    techno = Technology.objects.get(idx=int(idx))
-    
-    if techno.video is None:
-
-        log.debug("No video found for techno '{}', running youtube lookup...".format(techno.nom))
-        techno.video = Utils.get_technology_video(techno.nom)
-        techno.save(update_fields=['video'])
-
-    return render(request, "techno.html", {"att": techno})
-
-
-def search(request, words):
-    
-        words = request.GET["q"].split(" ")
-        search_results = Utils.search_in_objects(words)
-
-        return render(request,
-            "list.html", 
-            {'attributs': search_results, 'n_results': len(search_results), 'words': " ".join(words)})         
-                
-    # ---------------------------- Utils --------------------------------------------------------------- # 
+    # ---------------------------- Utils --------------------------------------------------------------- #
 
 class Utils:
 
-    @staticmethod 
+    @staticmethod
     def get_all_technologies():
         return list(Technology.objects.all())
 
-    @staticmethod 
+    @staticmethod
     def search_in_objects(words):
-        
+
+        """
+        search
+        in techno's attributes
+        (need to find a replacement)
+
+        """
+
         technos = Utils.get_all_technologies()
         match = []
 
-        for w in words:
+        for word in words:
             for techno in technos:
-                att = [i.lower() for i in techno.__dict__.values() if type(i) == str]
-                for a in att:
-                    if w.lower() in a:
-                        if not techno in match:
+                attributes = Utils.get_techno_attributes(techno)
+                for att in attributes:
+                    if word.lower() in att:
+                        if not techno in match and techno.show:
                             match.append(techno)
 
         return match
 
     @staticmethod
-    def get_technologies_att(technos):
-    
-        data = []
-
-        for tech in technos:
-
-            data.append({
-              "nom": tech.nom,
-              "description": tech.description,
-              "entreprise":tech.entreprise,
-              "type_techno": tech.type_techno,
-              "video": tech.video,
-              "article": tech.article,
-              "age": tech.age,
-              "patho": tech.patho,
-              "cif": tech.cif,
-              })
-
-        return data
+    def get_techno_attributes(techno):
+        return [i.lower() for i in techno.__dict__.values() if type(i) == str]
 
     @staticmethod
     def get_technology_video(name):
+
         """
-        shitty function to get a video describing the techno from youtube
+        not so great method to get a video
+        describing the techno from youtube
         """
 
         query_string = urllib.parse.urlencode({"search_query": name})
