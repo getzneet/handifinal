@@ -68,7 +68,7 @@ class SubmissionForm(forms.Form):
 
         if not all(cleaned_data.get(field) for field in required_fields):
 
-            raise forms.ValidationError("✘  Vous devez remplir les champs marqués d'une étoile !")
+            raise forms.ValidationError("✘           Vous devez remplir les champs marqués d'une étoile !")
 
         else:
 
