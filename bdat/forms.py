@@ -40,6 +40,8 @@ class SubmissionForm(forms.Form):
         required=True
     )
 
+    required_fields = ['nom', 'email', 'age', 'description', 'prix']
+
     def __init__(self, *args):
 
         super().__init__(*args)
@@ -64,11 +66,11 @@ class SubmissionForm(forms.Form):
 
         cleaned_data = super(SubmissionForm, self).clean()
 
-        required_fields = ['nom', 'email', 'age', 'description', 'prix']
+        if not all(cleaned_data.get(field) for field in self.required_fields):
 
-        if not all(cleaned_data.get(field) for field in required_fields):
-
-            raise forms.ValidationError("✘           Vous devez remplir les champs marqués d'une étoile !")
+            raise forms.ValidationError(
+                    message="Vous devez remplir les champs marqués d'une étoile !",
+            )
 
         else:
 
