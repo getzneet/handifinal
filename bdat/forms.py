@@ -1,4 +1,10 @@
 from django import forms
+
+from crispy_forms.bootstrap import Field, TabHolder, Tab
+from crispy_forms.helper import FormHelper
+
+from crispy_forms.layout import Layout, Fieldset
+
 from .models import Technology
 
 
@@ -7,7 +13,7 @@ class SubmissionForm(forms.Form):
     error_css_class = 'has-error'
 
     name = forms.CharField(max_length=30, label="Votre nom", required=False)
-    email = forms.EmailField(max_length=254, label="Votre email", required=False)
+    email = forms.EmailField(max_length=254, label="Votre email", required=True)
 
     nom = forms.CharField(
         max_length=100,
@@ -15,8 +21,8 @@ class SubmissionForm(forms.Form):
         required=True
     )
 
-    prix = forms.DecimalField(label="Prix de la technologie", required=False)
-    age = forms.CharField(max_length=100, label="Tranche d'âge concernée", required=False)
+    prix = forms.DecimalField(label="Prix de la technologie", required=True)
+    age = forms.CharField(max_length=100, label="Tranche d'âge concernée", required=True)
     type_techno = forms.CharField(max_length=100, label="Type de technologie", required=False)
     activite = forms.CharField(max_length=100, label="Activité", required=False)
     source = forms.CharField(max_length=100, label="Source", required=False)
@@ -31,20 +37,38 @@ class SubmissionForm(forms.Form):
         max_length=2000,
         widget=forms.Textarea(),
         help_text='',
-        required=False
+        required=True
     )
+
+    def __init__(self, *args):
+
+        super().__init__(*args)
+
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+
+        self.helper.layout = Layout(
+            Fieldset('Vos informations',
+                    Field('name', placeholder='Votre nom ici'),
+                    Field('email', placeholder='Votre email ici')
+            ),
+            Fieldset('Informations concernant la </br> </br> technologie',
+                TabHolder(
+                    Tab('Informations obligatoires', 'nom', 'prix', 'age', 'description'),
+                    Tab('Informations complémentaires', 'patho', 'cif', 'entreprise', 'source')
+                )
+            )
+        )
 
     def clean(self):
 
         cleaned_data = super(SubmissionForm, self).clean()
 
-        nom = cleaned_data.get('nom')
-        # age = cleaned_data.get('age')
-        # cif = cleaned_data.get('cif')
+        required_fields = ['nom', 'email', 'age', 'description', 'prix']
 
-        if not nom:
+        if not all(cleaned_data.get(field) for field in required_fields):
 
-            raise forms.ValidationError("Vous devez remplir l'ensemble des champs !")
+            raise forms.ValidationError("Vous devez remplir les champs marqués d'une étoile !")
 
         else:
 
