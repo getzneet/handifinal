@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from bdat import views
-import django
+from django.views import static
 
 from .settings import MEDIA_ROOT
 
@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^techno/([0-9]+)/$', views.technology, name='technology'),
     url(r'^search/(?:(?P<words>\w{0, 50})/)?$', views.search, name='search'),
     url(r'^subform/$', views.subform, name='subform'),
-    url(r'^static/(?P<path>.*)$', django.views.static.serve, {
+    url(r'^img/(?P<path>.*)$', static.serve, {
         'document_root': MEDIA_ROOT})
 ]
 
