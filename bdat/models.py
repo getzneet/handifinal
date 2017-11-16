@@ -57,10 +57,12 @@ class Technology(models.Model):
     # video showing the techno
     video = models.TextField(blank=True)
 
+    image = models.ImageField(upload_to="img/technos/")
+
     # is the techno visible on the website?
-    # has to be set to 1 after a form submission
+    # has to be set to true after a form submission
     # in order to see the techno on the website
-    show = models.IntegerField(max_length=100, null=True, blank=True)
+    show = models.NullBooleanField(null=True, blank=True)
 
     def __str__(self):
         return self.nom

@@ -21,7 +21,7 @@ def technology(request, id):
 
     techno = Technology.objects.get(id=int(id))
 
-    if techno.video is None:
+    if not techno.video:
 
         log.debug("No video found for techno '{}', running youtube lookup...".format(techno.nom))
         techno.video = Utils.get_technology_video(techno.nom)
@@ -93,7 +93,7 @@ def subform(request):
 
     if request.method == "POST":
 
-        form = SubmissionForm(request.POST)
+        form = SubmissionForm(request.POST, request.FILES)
 
         if form.is_valid():
             return render(request, "subform.html", {'form': form, 'success': 1})

@@ -1,5 +1,6 @@
 {% block block_list%}
 
+
 <!--Search engine div-->
 <div class="jumbotron">
             <center><h1>Liste des technologies</h1></center>
@@ -54,6 +55,13 @@
                 <div class="thumbnail">
                     <div class="caption">
                         <h3>{{ att.nom }}</h3>
+
+                        {% if att.image %}
+                        <div align="left">
+                            <img src="static/{{ att.image }}" style="border: solid #376471 2px; border-radius: 3px;"></img>
+                        </div>
+                        {% endif %}
+
                         <p>{{ att.description }}</p>
                         <div align="right">
                             <p><a href="//{{request.get_host}}/techno/{{ att.id }}" 
@@ -62,9 +70,11 @@
                     </div>
                 </div>
             </div>
+
         {% endfor %}
 
         </div>
+        <!------------------------>
 
  <!--ajax script used in order to refresh technologies when user launch a research-->
 <script>

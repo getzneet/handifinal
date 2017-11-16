@@ -2,6 +2,22 @@
 {% block title %}Assistances numériques{% endblock %}
 {% block content %}
 
+<style>
+
+input[type=file] {
+  border: 1px solid #CCCCCC;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  width: 50%;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+</style>
+
 {% include 'widgets/modal_form_validation.html' %}
 
 <div class="container">
@@ -16,7 +32,7 @@
         <br>
         <br>
 
-        <form method="post" id="subform" novalidate>
+        <form enctype="multipart/form-data" method="post" id="subform" novalidate>
         
         <!--Show pop if form is valid-->
         {% if success == 1 %}
@@ -36,10 +52,11 @@
 </div>
 
 <script>
+
     function Submit () {
         document.getElementById("subform").submit();
     }
+
 </script>
-<!-- formulaire -->
 
  {% endblock %}
