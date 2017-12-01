@@ -52,7 +52,7 @@ def home(request):
     home page
 
     """
-
+    
     queryset = Technology.objects.filter(show=1)
 
     return render(request, "home.html", {'attributs': queryset, 'words': 0, 'n_results': 0})

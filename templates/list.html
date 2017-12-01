@@ -1,4 +1,5 @@
 {% block block_list%}
+{% load static %}
 
 
 <!--Search engine div-->
@@ -31,6 +32,7 @@
 
                     <b> {{ n_results }} </b> résultat(s) pour :  <b> {{ words }} </b>.
 
+
                     {% elif words == 0 %}
 
                     <input class="form-control" type="text" name="searchinput"
@@ -39,6 +41,16 @@
                     </br>
 
                     {% endif %}
+
+                    <!--- En vue d'une future fonction avancée de recherche !-->
+                    <!--<input type="checkbox" name="Organisation" checked> Organisation -->
+                    <!--<input type="checkbox" name="Déplacement" checked> Déplacement <br>-->
+                    <!--<input type="checkbox" name="Santé" checked> Santé <br>-->
+                    <!--<input type="checkbox" name="Vie domestique" checked> Vie domestique <br>-->
+                    <!--<input type="checkbox" name="Loisirs" checked> Loisirs <br>-->
+                    <!--<input type="checkbox" name="Vie sociale" checked> Vie sociale <br>-->
+                    <!--<input type="checkbox" name="Travail" checked> Travail <br>-->
+                    <!--<input type="checkbox" name="Apprentissage" checked> Apprentissage <br>-->
 
                     </div>
                     </div>
@@ -51,25 +63,27 @@
         <div class="animate-bottom" name="list">
 
         {% for att in attributs %}
-            <div class="col-xl-8">
+
+            <div class="col-md-4">
+
                 <div class="thumbnail">
                     <div class="caption">
-                        <h3>{{ att.nom }}</h3>
-                        {{ att.image }}
-                        {% if att.image %}
-                        <div align="left">
-                            <img src="{{ att.image }}" style="border: solid #376471 2px; border-radius: 3px;"></img>
-                        </div>
-                        {% endif %}
+                                {% if att.image %}
+                                    <img src="{% static att.image %}" class="thumbnail" style="object-fit: cover"
+                                    width="250px" height="250px"></img>
+                                {% endif %}
 
-                        <p>{{ att.description }}</p>
-                        <div align="right">
-                            <p><a href="//{{request.get_host}}/techno/{{ att.id }}" 
-                                style="background-color: #325B6A ;" class="btn btn-primary" role="button">Plus d'informations</a>
+                                <h3>{{ att.nom }}</h3>
+                                <p>{{ att.description }}</p>
+
+                        <hr style="border-top: 1px solid #D5D5D5">
+                            <strong><p>Prix : </strong>{{att.prix}}</p>
+                                <strong><p>Mots clés : </strong>{{att.tag1}}, {{att.tag2}}, {{att.tag3}}</p>
+                            <p align="right"><a href="//{{request.get_host}}/techno/{{ att.id }}"style="background-color: #325B6A ;" class="btn btn-primary" role="button">Plus d'informations</a>
                         </div>
                     </div>
                 </div>
-            </div>
+
 
         {% endfor %}
 
@@ -90,7 +104,7 @@ $(document).ready(function(){
             //get input value
             var query = this.value;
 
-            //send it to django 
+            //send it to django and refresh div (with id 'search')
             $.ajax({
                 type: "GET",
                 url: 'search/?q=' + query ,

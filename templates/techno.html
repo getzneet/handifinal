@@ -1,38 +1,45 @@
 {% extends "base.html" %}
 {% block title %}Technologie{% endblock %}
 {% block content %}
+{% load static %}
+
     <div class="container" style="padding-top: 50px">
-        <ol class="breadcrumb">
-            <li><a href="/">Home</a></li>
-            <li class=""><a href="/categories">Categories</a></li>
-            <li class="active">{{ titre }}</li>
+        <div class="jumbotron row">
+            <div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+                                {% if att.image %}
+                                <img src="{% static att.image %}" class="thumbnail" style="object-fit: cover"
+                                height="auto" width="500px"></img>
+                                {% else %}
+                                <img src="http://www.letourdesplages.fr/wp-content/themes/twentythirteen-child/images/no-image.png" class="thumbnail" style="object-fit: cover"
+                                height="auto" width="500px"></img>
 
-        </ol>
+                                {% endif %}
+						</div>
+						
+					</div>
+					<div class="details col-md-6">
+                        <h3>{{ att.nom }}</h3>
+                        <br>
+                        <br>
+                        <p style="color: #1A1A1A; word-wrap: break-word; "><strong>Description</strong> : {{ att.description }}</p>
+                        <hr>
+                        <br>
+                        <h5>Classification : <span> {{ att.classification }}</span></h5>
+                        <h5>Tranche d'âge : <span> {{ att.age}}</span></h5>
+                        <h5>Prix : <span> {{ att.prix }}</span></h5>
+                        <h5>Références : <span> {{ att.article }}</span></h5>
+                        <h5> Liens : <a href="{{ att.source }}"> Source internet </a>
+                        <h5><p> Mots clés : {{ att.tag1 }}, {{att.tag2}}, {{att.tag3}}</p></h5>
+                    </div>
+				</div>
+			</div>
+			</div>
 
-    <div class="row">
-    <h1>{{ att.nom }}</h1>
-    <hr>
-    </br> 
-    </br> 
-    <table class="row">
-      <tr>
-        <th class="row">Description</th>
-        <th class="row">Type d'âge</th>
-        <th class="row">Type de technologie</th>
-        <th class="row">Pathologie&nbsp;&nbsp;</th>
-        <th class="row">CIF</th>
-        <th class="row">Entreprise/Laboratoire</th>
-      </tr>
-      <tr>
-        <td class="row">{{ att.description }}<br></td>
-                
-        <td class="row">{{ att.age}}</td>
-        <td class="row">{{ att.type_techno}}</td>
-        <td class="row">{{ att.patho}}</td>
-        <td class="row">{{ att.cif}}</td>
-        <td class="row">{{ att.entreprise}}</td>
-      </tr>
-    </table>
     </br> 
     <hr> 
     
@@ -43,20 +50,7 @@
     </iframe>
     {% endif %}
 
-
     </div>
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <!--<p>Copyright &copy; Your Website 2014</p>-->
-                </div>
-            </div>
-        </footer>
-    </div><!-- /.container -->
-
+    </div>
 
 {% endblock %}

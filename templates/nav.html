@@ -18,7 +18,6 @@
                 <img src="{% static "img/bx.png" %}" id="logo"></li>
 
                 <li><a href="/"><i class="fa fa-home" style="font-size: 20px;">&nbsp;	 </i>Accueil</a></li>
-                <li><a href="/categories"><i class="fa fa-bars" style="font-size: 20px;">&nbsp;	 </i>Categories</a></li>
                 <li><a href="/subform"><i class="fa fa-arrow-circle-up" style="font-size: 20px;">&nbsp;</i>Soumettre une technologie</a></li>
                 <li><a href="/about"><i class="fa fa-user" style="font-size: 20px;">&nbsp;</i>À propos</a></li>
                 <li><a href="/contact"><i class="fa fa-send">&nbsp;	 </i>Contact</a></li>
@@ -44,3 +43,57 @@
 </section>
 </br>
 </br>
+
+<script>
+
+    postcss([
+        require('postcss-high-contrast')({
+            aggressiveHC: true, aggressiveHCDefaultSelectorList: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'th', 'td'], aggressiveHCCustomSelectorList: ['div', 'span'],
+
+            backgroundColor: '#000',
+            altBgColor: '#fff',
+
+            textColor: '#fff',
+
+            buttonSelector: ['button'],
+            buttonColor: '#000',
+            buttonBackgroundColor: '#fcff3c',
+            buttonBorderColor: 'none',
+            
+            linkSelectors:  ['a'], linkColor: '#fcff3c',
+            linkHoverColor: '#fcff3c',
+
+            borderColor: '#fff',
+            disableShadow: true,
+            
+            customSelectors: ['input'],
+            customSelectorColor: '#fff',
+            customSelectorBackgroundColor: '#000',
+            customSelectorBorderdColor: '#fff',
+            
+            selectorsBlackList: ['textfield'],
+
+            imageFilter: 'invert(100%)',
+            imageSelectors: ['img'],
+
+            removeCSSProps: false,
+            CSSPropsWhiteList: ['background', 'background-color', 'color', 'border', 'border-top', 'border-bottom',
+                'border-left', 'border-right', 'border-color', 'border-top-color', 'border-right-color',
+                'border-bottom-color', 'border-left-color', 'box-shadow', 'filter', 'text-shadow']
+        })
+]);
+
+function appendHighContrastCss(){
+	var hc = '<link rel="stylesheet" href="/assets/css/high-contrast.css" id="hccss"/>';
+
+	if(!$('#highContrastCss').length ){
+		$('head').append(hc);
+	} else {
+		$('#hccss').remove();
+	}
+}
+
+$('a.high-contrast').click(loadHighContrastCSS);
+	appendHighContrastCss();
+}
+</script>

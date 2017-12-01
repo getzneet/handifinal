@@ -1,9 +1,61 @@
 {% extends "base.html" %}
 {% block title %}Assistances numériques{% endblock %}
 {% block content %}
-    
+
+<!--<style>-->
+
+<!--.clickable{-->
+    <!--cursor: pointer;   -->
+<!--}-->
+
+<!--.panel-heading span {-->
+    <!--margin-top: -20px;-->
+	<!--font-size: 15px;-->
+<!--}-->
+
+<!--#left-panel{-->
+    <!--position: sticky;-->
+    <!--top: 85px; -->
+    <!--z-index: 10;-->
+<!--}   -->
+<!--</style>-->
+
+<!--<script>-->
+<!--$(document).on('click', '.panel-heading span.clickable', function(e){-->
+    <!--var $this = $(this);-->
+    <!--if(!$this.hasClass('panel-collapsed')) {-->
+		<!--$this.parents('.panel').find('.panel-body').slideUp();-->
+		<!--$this.addClass('panel-collapsed');-->
+        <!--$this.addClass('sticky');-->
+	<!--} else {-->
+		<!--$this.parents('.panel').find('.panel-body').slideDown();-->
+		<!--$this.removeClass('panel-collapsed');-->
+        <!--$this.addClass('sticky');-->
+	<!--}-->
+<!--})-->
+<!--</script>-->
+
+    <!----------- Search panel ------------------>
+<!--    <div class="col-sm-3 col-md-3" id="left-panel">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">-->
+                    <!--<span class="pull-right clickable"></span>-->
+					<!--<h3 class="panel-title">Height</h3>-->
+				<!--</div>-->
+				<!--<div class="panel-body">Panel content</div>-->
+			<!--</div>-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">-->
+					<!--<h3 class="panel-title">Age</h3>-->
+                    <!--<span class="pull-right clickable"><i class="fa fa-arrow-down"></i></span>-->
+				<!--</div>-->
+				<!--<div class="panel-body">Panel content</div>-->
+			<!--</div>-->
+    <!--</div>-->
+
     <div class="container" style="padding-top: 50px" id="search">
             {% include "list.html" %}
     </div>
+
 
 {% endblock %}

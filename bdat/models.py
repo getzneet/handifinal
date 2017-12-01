@@ -29,15 +29,6 @@ class Technology(models.Model):
     # age slice
     age = models.CharField(max_length=100, null=True, blank=True)
 
-    # type
-    type_techno = models.CharField(max_length=100, null=True, blank=True)
-
-    # type of activity
-    activite = models.CharField(max_length=100, null=True, blank=True)
-
-    # comments
-    commentaires = models.CharField(max_length=100, null=True, blank=True)
-
     # source
     source = models.CharField(max_length=100, null=True, blank=True)
     article = models.TextField(null=True, blank=True)
@@ -45,24 +36,23 @@ class Technology(models.Model):
     # company developping the technology
     entreprise = models.CharField(max_length=100, null=True, blank=True)
 
-    # what condition/pathology/illness
-    patho = models.CharField(max_length=100, null=True, blank=True)
-
-    # cif classification
-    cif = models.CharField(max_length=100, null=True, blank=True)
-
-    # fonction?
-    fonction = models.CharField(max_length=100, null=True, blank=True)
+    # classification
+    classification = models.CharField(max_length=100, null=True, blank=True)
 
     # video showing the techno
     video = models.TextField(blank=True)
 
+    # image
     image = models.ImageField(upload_to="img/technos/")
 
     # is the techno visible on the website?
     # has to be set to true after a form submission
     # in order to see the techno on the website
     show = models.NullBooleanField(null=True, blank=True)
+
+    tag1 = models.CharField(max_length=100, null=True, blank=True)
+    tag2 = models.CharField(max_length=100, null=True, blank=True)
+    tag3 = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.nom
