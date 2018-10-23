@@ -91,7 +91,7 @@ def subform(request):
     renders the form page
     """
 
-    if request.method == "POST":
+    if request.method == "POST" and len(request.POST) > 1:
 
         form = SubmissionForm(request.POST, request.FILES)
 

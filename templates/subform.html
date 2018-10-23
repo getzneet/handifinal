@@ -32,7 +32,7 @@ input[type=file] {
         <br>
         <br>
 
-        <form enctype="multipart/form-data" method="post" id="subform" novalidate>
+        <form enctype="multipart/form-data" method="POST" id="subform">
         
         <!--Show pop if form is valid-->
         {% if success == 1 %}
@@ -44,7 +44,8 @@ input[type=file] {
       {% csrf_token %}
       {% include 'form.html' with form=form %}
 
-      <button onclick="Submit()" type="submit" class="btn btn-primary" style="font-size: 20px;">Soumettre</button>
+    </form>
+      <input onclick="Submit()" class="btn btn-primary" style="font-size: 20px;">Soumettre</input>
 
 </div>
 </div>

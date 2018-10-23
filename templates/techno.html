@@ -12,7 +12,7 @@
 						
 						<div class="preview-pic tab-content">
                                 {% if att.image %}
-                                <img src="{% static att.image %}" class="thumbnail" style="object-fit: cover"
+                                <img src="//{{request.get_host}}/img/{{ att.image }}" class="thumbnail" style="object-fit: cover"
                                 height="auto" width="500px"></img>
                                 {% else %}
                                 <img src="http://www.letourdesplages.fr/wp-content/themes/twentythirteen-child/images/no-image.png" class="thumbnail" style="object-fit: cover"
